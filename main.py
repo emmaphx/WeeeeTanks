@@ -250,7 +250,6 @@ def doCollisions(app):
                     mine.explode(app)
             if(mine.checkCollision(app.player.getPos(),app.player.getSize())):
                 mine.explode(app)
-                hitTaken(app)
 
 def doWallRicochet(app,bullet):
     cell = locationToCell(bullet.getPos())
