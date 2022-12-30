@@ -7,6 +7,8 @@ from loading_graphics import *
 from home_graphics import *
 from lost_graphics import *
 from won_graphics import *
+from visualizeTimes import *
+
 
 def appStarted(app): 
     app.enemyTanks = []
@@ -53,10 +55,12 @@ def appStarted(app):
     app.dir = controls.controller()
     app.homePress = False
 
+
+
 #Game
 def game_timerFired(app):
     if not app.paused:
-        #app.time2 = time.time()
+        app.time2 = time.time()
         doCollisions(app)
         doRicochet(app)
         doMove(app)
@@ -67,8 +71,8 @@ def game_timerFired(app):
             app.paused = True
             app.winPause = True
             app.time0 = time.time()
-        #app.timeEnd = time.time()
-        #logTimes(app.time2, app.timeEnd, "times.txt")
+        with open("times.txt","a") as f:
+            logTime(time.time(), app.time2, "times.txt")
 
     if(app.hitPause and time.time() - app.time0 > 3):
         resetLevel(app)
@@ -195,6 +199,8 @@ def resetLevel(app):
     else:
         app.mode = 'loading'
 
+  
+
 def completeLevel(app):
     app.currentLevel += 1
     if(app.currentLevel > levels.totalLevels):
@@ -243,7 +249,7 @@ def doCollisions(app):
                 if (mine.checkCollision(tank.getPos(),tank.getSize())):
                     mine.explode(app)
             if(mine.checkCollision(app.player.getPos(),app.player.getSize())):
-                mine.explode()
+                mine.explode(app)
                 hitTaken(app)
 
 def doWallRicochet(app,bullet):
