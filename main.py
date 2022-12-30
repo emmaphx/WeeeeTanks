@@ -69,10 +69,12 @@ def game_timerFired(app):
         doExplosions(app)
         app.player.timeSinceLastFire += app.timeConstant
         app.player.timeSinceLastMine += app.timeConstant
+
         if(len(app.enemyTanks) == 0):
             app.paused = True
             app.winPause = True
             app.time0 = time.time()
+
 
         if (app.debug):
             app.times.append( (time.time(), app.time2) )

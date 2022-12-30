@@ -8,7 +8,7 @@ def logTime(time1, time2, file):
 
 def makePlot(times):
     intTimes = []
-    ymin = float(0)
+    ymin = float(100)
     ymax = float(0)
     for x in times:
         try:
@@ -32,7 +32,7 @@ def processTime(file):
     try:
         with open(file, "r") as f:
             times = f.read().split("\n")
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         pass
     
     return times
