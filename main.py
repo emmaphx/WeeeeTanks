@@ -55,7 +55,9 @@ def appStarted(app):
     app.dir = controls.controller()
     app.homePress = False
 
-
+    #Debugging 
+    app.debug = True
+    app.times = []
 
 #Game
 def game_timerFired(app):
@@ -71,8 +73,9 @@ def game_timerFired(app):
             app.paused = True
             app.winPause = True
             app.time0 = time.time()
-        with open("times.txt","a") as f:
-            logTime(time.time(), app.time2, "times.txt")
+
+        if (app.debug):
+            app.times.append( (time.time(), app.time2) )
 
     if(app.hitPause and time.time() - app.time0 > 3):
         resetLevel(app)
@@ -80,6 +83,10 @@ def game_timerFired(app):
         app.winPause = False
         app.paused = False
         completeLevel(app)
+        if (app.debug):
+            with open("times.txt", "a+") as f:
+                for x in app.times:
+                    logTime(x[0], x[1], "times.txt")
     
 def game_keyPressed(app, event):
     key = event.key.lower()
